@@ -1,0 +1,19 @@
+<project name="SFDCBuild" default="fetch" basedir="." xmlns:sf="antlib:com.salesforce">	
+	<taskdef uri="antlib:com.salesforce" classpath="${basedir}/ant-lib/ant-salesforce.jar" />
+
+	<property file="build.properties" />
+	<property environment="env" />
+
+	<target name="fetch">
+		<delete dir="OrgMetaData" />
+		<mkdir dir="OrgMetaData" />
+		<!-- Retrieve the contents into another directory -->
+		<sf:retrieve username="${username}" password="${password}" serverurl="${serverurl}" retrieveTarget="OrgMetaData" unpackaged="src/package.xml" />
+	</target>
+
+	<target name="deploy">
+		<!-- Retrieve the contents into another directory -->
+		<sf:deploy username="${username}" password="${password}" serverurl="${serverurl}" deployRoot="src" pollWaitMillis="1000" />
+	</target>
+	
+</project>
